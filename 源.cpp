@@ -15,26 +15,26 @@
 using namespace std;
 
 struct OperationRecord {
-    std::string operationType; 
+    std::string operationType; //è¿™ä¸ªæ˜¯æµ‹è¯•
     int value; 
 };
-std::vector<OperationRecord> operationRecords; // ÓÃÓÚ´æ´¢²Ù×÷¼ÇÂ¼µÄÈİÆ÷
+std::vector<OperationRecord> operationRecords; // ç”¨äºå­˜å‚¨æ“ä½œè®°å½•çš„å®¹å™¨
 
 struct Button
 {
     int X;
     int Y;
-    int hsize;			// °´Å¥µÄ¸ß¶È
-    int lsize;			// °´Å¥µÄ³¤¶È
-    LPCTSTR str;		// ×Ö·û´®
-    COLORREF Strcolor;	// ×ÖÌåÑÕÉ«
-    COLORREF Linecolor;	// ÏßµÄÑÕÉ«
-    COLORREF Bkcolor;	// Ìî³äÔ²½Ç¾ØĞÎÑÕÉ«		
+    int hsize;			// æŒ‰é’®çš„é«˜åº¦
+    int lsize;			// æŒ‰é’®çš„é•¿åº¦
+    LPCTSTR str;		// å­—ç¬¦ä¸²
+    COLORREF Strcolor;	// å­—ä½“é¢œè‰²
+    COLORREF Linecolor;	// çº¿çš„é¢œè‰²
+    COLORREF Bkcolor;	// å¡«å……åœ†è§’çŸ©å½¢é¢œè‰²		
 };
 
 
 
-// Ñ­»·¶ÓÁĞ½á¹¹
+// å¾ªç¯é˜Ÿåˆ—ç»“æ„
 struct CircularQueue 
 {
     int data[MAX_SIZE]; 
@@ -43,7 +43,7 @@ struct CircularQueue
     bool isDequeued[MAX_SIZE]; 
 };
 
-// º¯ÊıÉùÃ÷
+// å‡½æ•°å£°æ˜
 void initQueue(CircularQueue* q);
 bool isEmpty(const CircularQueue* q);
 bool isFull(const CircularQueue* q);
@@ -57,7 +57,7 @@ void DrawButton(Button button);
 int ButtonDown();		
 Button button[2];
 
-// ³õÊ¼»¯¶ÓÁĞ
+// åˆå§‹åŒ–é˜Ÿåˆ—
 void initQueue(CircularQueue* q) {
     q->front = 0;
     q->rear = 0;
@@ -66,23 +66,23 @@ void initQueue(CircularQueue* q) {
     }
 }
 
-//ÅĞ¶ÏÊÇ·ñ¶Ó¿Õ
+//åˆ¤æ–­æ˜¯å¦é˜Ÿç©º
 bool isEmpty(const CircularQueue* q) {
     return q->front == q->rear;
 }
 
-//ÅĞ¶ÏÊÇ·ñ¶ÓÂú
+//åˆ¤æ–­æ˜¯å¦é˜Ÿæ»¡
 bool isFull(const CircularQueue* q) {
     return (q->rear + 1) % MAX_SIZE == q->front;
 }
 
-//Èë¶Ó
+//å…¥é˜Ÿ
 bool enqueue(CircularQueue* q, int value)
 {
     if (isFull(q)) {
         int tempValue;
         dequeue(q, &tempValue); 
-        printf("¶ÓÁĞÂú£¬³ö¶Ó: %d\n", tempValue);
+        printf("é˜Ÿåˆ—æ»¡ï¼Œå‡ºé˜Ÿ: %d\n", tempValue);
 
     }
     int index = q->rear;
@@ -99,7 +99,7 @@ bool enqueue(CircularQueue* q, int value)
     return true;
 }
 
-//³ö¶Ó
+//å‡ºé˜Ÿ
 bool dequeue(CircularQueue* q, int* value)
 {
     if (isEmpty(q))
@@ -118,17 +118,17 @@ bool dequeue(CircularQueue* q, int* value)
 }
 
 
-// »æÖÆ¶ÓÁĞ×´Ì¬
+// ç»˜åˆ¶é˜Ÿåˆ—çŠ¶æ€
 void drawQueue(const CircularQueue* q, int nextEnqueueValue, bool isPaused, int dequeuedValue) 
 {
     setfillcolor(BLACK);
     solidrectangle(0, 0, getwidth(), getheight());
     TCHAR str[126];
 
-    // ±êÌâ
+    // æ ‡é¢˜
     settextcolor(WHITE);
     settextstyle(30, 0, _T("Arial"));
-    outtextxy(200, 20, _T("Ñ­»·¶ÓÁĞ:Ë³Ğò´æ´¢½á¹¹"));   
+    outtextxy(200, 20, _T("å¾ªç¯é˜Ÿåˆ—:é¡ºåºå­˜å‚¨ç»“æ„"));   
     settextcolor(WHITE);
 
     settextcolor(WHITE);
@@ -138,17 +138,17 @@ void drawQueue(const CircularQueue* q, int nextEnqueueValue, bool isPaused, int 
     int T = q->front; 
 
 
-    // ±ê×¢¶ÓÁĞ²ÛºÍÊı¾İ
+    // æ ‡æ³¨é˜Ÿåˆ—æ§½å’Œæ•°æ®
     for (int i = 0; i < MAX_SIZE; i++)
     {
         setlinecolor(WHITE);
         fillrectangle(i * 50 + 50, 120, i * 50 + 100, 170);
 
-        // ±êÊ¾Ã¿¸ö²ÛÎ»µÄË÷Òı
+        // æ ‡ç¤ºæ¯ä¸ªæ§½ä½çš„ç´¢å¼•
         settextcolor(WHITE);
         settextstyle(22, 0, _T("Arial"));
         _stprintf_s(str, _T("%d"), i % MAX_SIZE);
-        outtextxy(i * 50 + 55, 175, str); // ÏÔÊ¾Ë÷Òı
+        outtextxy(i * 50 + 55, 175, str); // æ˜¾ç¤ºç´¢å¼•
 
         if (q->isDequeued[i])
         {
@@ -170,38 +170,38 @@ void drawQueue(const CircularQueue* q, int nextEnqueueValue, bool isPaused, int 
         }
     }
 
-    // »æÖÆ¶ÓÍ·Ö¸Õë£¨Front£©
+    // ç»˜åˆ¶é˜Ÿå¤´æŒ‡é’ˆï¼ˆFrontï¼‰
     int frontPosX = ((q->front) * 50) + 75;
     setlinecolor(RED);
     line(frontPosX, 95, frontPosX, 105);
     settextcolor(WHITE);
     outtextxy(frontPosX - 30, 210, _T("Front"));
     
-    // »æÖÆ¶ÓÎ²Ö¸Õë£¨Rear£©
+    // ç»˜åˆ¶é˜Ÿå°¾æŒ‡é’ˆï¼ˆRearï¼‰
     int rearPosX = ((q->rear + MAX_SIZE) % MAX_SIZE * 50) + 75;
     setlinecolor(GREEN);
     line(rearPosX, 95, rearPosX, 105);
     outtextxy(rearPosX - 30, 240, _T("Rear"));
     settextcolor(WHITE);
 
-    // »æÖÆÖ¸ÏòÊı×éµÄ¼ıÍ·
-    line(frontPosX, 170, frontPosX, 185); // FrontÖ¸Ïò
-    line(rearPosX, 170, rearPosX, 185); // RearÖ¸Ïò
+    // ç»˜åˆ¶æŒ‡å‘æ•°ç»„çš„ç®­å¤´
+    line(frontPosX, 170, frontPosX, 185); // FrontæŒ‡å‘
+    line(rearPosX, 170, rearPosX, 185); // RearæŒ‡å‘
 
     if (isFull(q)) {
         settextcolor(RED);
         settextstyle(40, 0, _T("Arial"));
-        outtextxy(570,110, _T("¶ÓÒÑÂú"));
+        outtextxy(570,110, _T("é˜Ÿå·²æ»¡"));
     }
 
-    //²Ù×÷¼ÇÂ¼ÇøÓò
+    //æ“ä½œè®°å½•åŒºåŸŸ
     setfillcolor(RGB(30, 30, 30));
     solidrectangle(50, 300, 600, 700);
 
     settextcolor(WHITE);
     settextstyle(20, 0, _T("Arial"));
 
-    outtextxy(60, 310, _T("²Ù×÷¼ÇÂ¼"));
+    outtextxy(60, 310, _T("æ“ä½œè®°å½•"));
     setbkmode(TRANSPARENT);
 
     const int maxCharsPerLine = 30;
@@ -209,7 +209,7 @@ void drawQueue(const CircularQueue* q, int nextEnqueueValue, bool isPaused, int 
     int currentColumnX = 60;
     int currentRowY = 330;
 
-    std::ifstream file("data.txt");  // ´ò¿ª²Ù×÷¼ÇÂ¼ÎÄ¼ş£¬¸ù¾İÊµ¼ÊÇé¿öĞŞ¸ÄÎÄ¼şÃû
+    std::ifstream file("data.txt");  // æ‰“å¼€æ“ä½œè®°å½•æ–‡ä»¶ï¼Œæ ¹æ®å®é™…æƒ…å†µä¿®æ”¹æ–‡ä»¶å
     if (file.is_open())
     {
         std::string line;
@@ -223,7 +223,7 @@ void drawQueue(const CircularQueue* q, int nextEnqueueValue, bool isPaused, int 
             _stprintf_s(str, _T("%s %d"), operationType.c_str(), value);
             outtextxy(currentColumnX, currentRowY, str);
             currentRowY += 20;
-            if (currentRowY > 680)  // ÅĞ¶ÏÊÇ·ñ³¬³ö²Ù×÷¼ÇÂ¼ÇøÓòÏÔÊ¾·¶Î§£¬¿É¸ù¾İÊµ¼Êµ÷Õû
+            if (currentRowY > 680)  // åˆ¤æ–­æ˜¯å¦è¶…å‡ºæ“ä½œè®°å½•åŒºåŸŸæ˜¾ç¤ºèŒƒå›´ï¼Œå¯æ ¹æ®å®é™…è°ƒæ•´
             {
                 currentColumnX += columnSpacing;
                 currentRowY = 330;
@@ -233,7 +233,7 @@ void drawQueue(const CircularQueue* q, int nextEnqueueValue, bool isPaused, int 
     }
     else
     {
-        outtextxy(60, 330, _T("ÎŞ·¨´ò¿ª²Ù×÷¼ÇÂ¼ÎÄ¼ş"));
+        outtextxy(60, 330, _T("æ— æ³•æ‰“å¼€æ“ä½œè®°å½•æ–‡ä»¶"));
     }
 
 }
@@ -246,7 +246,7 @@ void runAnimation(CircularQueue* queue)
     int dequeuedValue = -1;
     drawQueue(queue, 0, pause, dequeuedValue);
     
-    // »æÖÆÁ½¸ö°´Å¥,½øĞĞÑ¡ÔñÈë¶Ó»¹ÊÇ³ö¶Ó
+    // ç»˜åˆ¶ä¸¤ä¸ªæŒ‰é’®,è¿›è¡Œé€‰æ‹©å…¥é˜Ÿè¿˜æ˜¯å‡ºé˜Ÿ
     int NUMS[20] = { 10,32,54,66,11,67,87,43,83,28,76,30,14}; 
     DrawTXT(0);
     int MYS = 0;
@@ -307,22 +307,22 @@ void runAnimation(CircularQueue* queue)
         }
     }
 
-// Ö÷º¯Êı
+// ä¸»å‡½æ•°
 int main()
 {
     CircularQueue queue;
     initQueue(&queue);
-    initgraph(1200, 1200); // ³õÊ¼»¯Í¼ĞÎ´°¿Ú
+    initgraph(1200, 1200); // åˆå§‹åŒ–å›¾å½¢çª—å£
     DrawTXT(0);
-    runAnimation(&queue); // ¿ªÊ¼¶¯»­
-    closegraph(); // ¹Ø±ÕÍ¼ĞÎ´°¿Ú
+    runAnimation(&queue); // å¼€å§‹åŠ¨ç”»
+    closegraph(); // å…³é—­å›¾å½¢çª—å£
     return 0;
 }
 
 void DrawButton(Button button)
 {
     settextcolor(button.Strcolor);
-    settextstyle(button.hsize - 5, 0, _T("¿¬Ìå"));
+    settextstyle(button.hsize - 5, 0, _T("æ¥·ä½“"));
     setlinecolor(button.Linecolor);
     setlinestyle(PS_SOLID, 1);
     setfillcolor(button.Bkcolor);
@@ -334,8 +334,8 @@ void DrawButton(Button button)
 
 int ButtonDown()
 {
-    button[0] = { 700,550,40, 480 ,_T("Èë¶Ó"),WHITE,BLUE,RED };
-    button[1] = { 700,600,40,480,_T("³ö¶Ó"),WHITE,BLUE,RED };
+    button[0] = { 700,550,40, 480 ,_T("å…¥é˜Ÿ"),WHITE,BLUE,RED };
+    button[1] = { 700,600,40,480,_T("å‡ºé˜Ÿ"),WHITE,BLUE,RED };
     int buttonNUM = 2;
     BeginBatchDraw();
     ExMessage msg;
@@ -414,7 +414,7 @@ void DrawTXT(int H)
         solidrectangle(700, 100 + H * 20, 1140, 100 + H * 20 + 15);
     }
     int starx = 710;
-    settextstyle(20,0, _T("ËÎÌå"));
+    settextstyle(20,0, _T("å®‹ä½“"));
     setbkmode(TRANSPARENT);
 
     std::ifstream file("code display.txt");  
@@ -431,6 +431,6 @@ void DrawTXT(int H)
     }
     else
     {
-        outtextxy(710, 100, _T("ÎŞ·¨´ò¿ªËã·¨´úÂëÎÄ¼ş")); 
+        outtextxy(710, 100, _T("æ— æ³•æ‰“å¼€ç®—æ³•ä»£ç æ–‡ä»¶")); 
     }
 }
